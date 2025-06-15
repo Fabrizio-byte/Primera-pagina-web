@@ -1,0 +1,9 @@
+mi-pagina-html5/
+│
+├── index.html
+├── styles.css
+├── assets/
+    ├── img/
+    │   └── imagen1.jpg  (puedes poner aquí tu imagen)
+    └── video/
+        └── video1.mp4 (tu video)

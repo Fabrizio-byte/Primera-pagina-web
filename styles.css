@@ -1,0 +1,77 @@
+/* Estilo para el cuerpo de la página */
+body {
+  font-family: Arial, sans-serif; /* Tipo de letra general */
+  background-color: #f0f8ff; /* Color de fondo suave */
+  color: #333; /* Color del texto */
+  margin: 0;
+  padding: 20px;
+}
+
+/* Encabezados */
+h1 {
+  color: #0066cc; /* Color del título principal */
+  text-align: center;
+}
+
+h2, h3 {
+  color: #003366; /* Color de subtítulos */
+}
+
+/* Estilo para párrafos */
+p {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* Estilo para listas */
+ul, ol {
+  margin-left: 20px;
+}
+
+/* Estilo para la tabla */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+table, th, td {
+  border: 1px solid #999;
+}
+th {
+  background-color: #e0e0e0;
+  padding: 8px;
+}
+td {
+  padding: 8px;
+  text-align: center;
+}
+
+/* Estilo para el formulario */
+form {
+  margin-top: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  max-width: 400px;
+  background-color: #fafafa;
+}
+label {
+  display: block;
+  margin-top: 10px;
+}
+input[type="text"], input[type="email"] {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  box-sizing: border-box;
+}
+button {
+  margin-top: 10px;
+  padding: 10px 15px;
+  background-color: #0066cc;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+button:hover {
+  background-color: #005bb5;
+}
