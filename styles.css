@@ -21,7 +21,7 @@ h2, h3 {
 p {
   font-size: 16px;
   line-height: 1.5;
-}
+}  
 
 /* Estilo para listas */
 ul, ol {
@@ -75,3 +75,4 @@ button {
 button:hover {
   background-color: #005bb5;
 }
+
