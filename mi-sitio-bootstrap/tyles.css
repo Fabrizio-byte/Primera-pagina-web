@@ -1,0 +1,17 @@
+/* styles.css */
+.btn-primary {
+  background-color: #ff5733; /* Color diferente para el botón */
+  border-color: #ff5733;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+@media (max-width: 768px) {
+  body {
+    background-color: #f0f0f0; /* Cambia el fondo en pantallas pequeñas */
+  }
+}
