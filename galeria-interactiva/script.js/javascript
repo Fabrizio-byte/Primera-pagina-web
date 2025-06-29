@@ -1,0 +1,82 @@
+// Obtener referencias a elementos del DOM
+const galeria = document.getElementById('galeria');
+const inputUrl = document.getElementById('image-url');
+const btnAgregar = document.getElementById('add-img');
+const btnEliminar = document.getElementById('delete-img');
+
+let imgSeleccionada = null; // Variable para mantener la imagen seleccionada
+
+// Función para crear y agregar una nueva imagen a la galería
+function agregarImagen() {
+    const url = inputUrl.value.trim();
+    if (url === '') {
+        alert('Por favor, ingresa una URL válida.');
+        return;
+    }
+
+    const img = document.createElement('img');
+    img.src = url;
+    img.alt = 'Imagen';
+    
+    // Agregar evento para seleccionar la imagen
+    img.addEventListener('click', () => {
+        seleccionarImagen(img);
+    });
+
+    // Agregar la imagen a la galería
+    galeria.appendChild(img);
+
+    // Opcional: animación de entrada
+    img.animate([
+        { opacity: 0, transform: 'translateY(-20px)' },
+        { opacity: 1, transform: 'translateY(0)' }
+    ], {
+        duration: 500,
+        fill: 'forwards'
+    });
+
+    // Limpia el input
+    inputUrl.value = '';
+}
+
+// Función para seleccionar una imagen
+function seleccionarImagen(imagen) {
+    // Deseleccionar la actual
+    if (imgSeleccionada) {
+        imgSeleccionada.classList.remove('imagen-seleccionada');
+    }
+
+    // Seleccionar la nueva
+    imagen.classList.add('imagen-seleccionada');
+    imgSeleccionada = imagen;
+}
+
+// Función para eliminar la imagen seleccionada
+function eliminarImagen() {
+    if (imgSeleccionada) {
+        // Animación de salida opcional
+        imgSeleccionada.animate([
+            { opacity: 1, transform: 'scale(1)' },
+            { opacity: 0, transform: 'scale(0.8)' }
+        ], {
+            duration: 300,
+            fill: 'forwards'
+        }).onfinish = () => {
+            galeria.removeChild(imgSeleccionada);
+            imgSeleccionada = null;
+        };
+    } else {
+        alert('No hay ninguna imagen seleccionada.');
+    }
+}
+
+// Eventos
+btnAgregar.addEventListener('click', agregarImagen);
+btnEliminar.addEventListener('click', eliminarImagen);
+
+// También puedes agregar la funcionalidad para pulsar Enter en el input
+inputUrl.addEventListener('keydown', event => {
+    if (event.key === 'Enter') {
+        agregarImagen();
+    }
+});
