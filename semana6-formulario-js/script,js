@@ -1,0 +1,187 @@
+document.addEventListener('DOMContentLoaded', () => {
+    // Referencias a los elementos del formulario
+    const form = document.getElementById('registrationForm');
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const confirmPasswordInput = document.getElementById('confirmPassword');
+    const ageInput = document.getElementById('age');
+
+    // Referencias a los elementos de mensajes de error
+    const nameError = document.getElementById('nameError');
+    const emailError = document.getElementById('emailError');
+    const passwordError = document.getElementById('passwordError');
+    const confirmPasswordError = document.getElementById('confirmPasswordError');
+    const ageError = document.getElementById('ageError');
+
+    // Referencias a los botones
+    const submitBtn = document.getElementById('submitBtn');
+    const resetBtn = document.getElementById('resetBtn');
+
+    /**
+     * Función utilitaria para aplicar estilos y mostrar/ocultar mensajes de error.
+     * @param {HTMLElement} inputElement - El campo de entrada HTML.
+     * @param {HTMLElement} errorElement - El elemento span/div para el mensaje de error.
+     * @param {boolean} isValid - True si el campo es válido, false en caso contrario.
+     * @param {string} message - El mensaje de error a mostrar (vacío si es válido).
+     */
+    function setValidationState(inputElement, errorElement, isValid, message = '') {
+        if (isValid) {
+            inputElement.classList.remove('invalid');
+            inputElement.classList.add('valid');
+            errorElement.classList.remove('visible');
+            errorElement.textContent = '';
+        } else {
+            inputElement.classList.add('invalid');
+            inputElement.classList.remove('valid');
+            errorElement.classList.add('visible');
+            errorElement.textContent = message;
+        }
+    }
+
+    // --- Funciones de validación para cada campo ---
+
+    function validateName() {
+        const name = nameInput.value.trim();
+        const isValid = name.length >= 3;
+        setValidationState(nameInput, nameError, isValid, 'El nombre debe tener al menos 3 caracteres.');
+        return isValid;
+    }
+
+    function validateEmail() {
+        const email = emailInput.value.trim();
+        // Expresión regular para validar formato de email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const isValid = emailRegex.test(email);
+        setValidationState(emailInput, emailError, isValid, 'Ingrese un formato de correo electrónico válido (ej: usuario@dominio.com).');
+        return isValid;
+    }
+
+    function validatePassword() {
+        const password = passwordInput.value;
+        const hasMinLength = password.length >= 8;
+        const hasNumber = /\d/.test(password); // Al menos un dígito
+        const hasSpecialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(password); // Al menos un carácter especial
+
+        const isValid = hasMinLength && hasNumber && hasSpecialChar;
+        let message = '';
+        if (!password) { // Si está vacío, no mostrar mensajes específicos hasta que se intente escribir
+            message = 'La contraseña es obligatoria.';
+        } else if (!hasMinLength) {
+            message += 'Mínimo 8 caracteres. ';
+        }
+        if (!hasNumber) {
+            message += 'Al menos un número. ';
+        }
+        if (!hasSpecialChar) {
+            message += 'Al menos un carácter especial. ';
+        }
+        setValidationState(passwordInput, passwordError, isValid, message.trim());
+        return isValid;
+    }
+
+    function validateConfirmPassword() {
+        const password = passwordInput.value;
+        const confirmPassword = confirmPasswordInput.value;
+        // La confirmación es válida si no está vacía Y coincide con la contraseña principal
+        const isValid = confirmPassword.length > 0 && confirmPassword === password;
+        setValidationState(confirmPasswordInput, confirmPasswordError, isValid, 'Las contraseñas no coinciden.');
+        return isValid;
+    }
+
+    function validateAge() {
+        const age = parseInt(ageInput.value, 10); // Convertir a número entero
+        // Es válido si no es NaN (no es un número) Y es mayor o igual a 18
+        const isValid = !isNaN(age) && age >= 18;
+        setValidationState(ageInput, ageError, isValid, 'Debe tener al menos 18 años para registrarse.');
+        return isValid;
+    }
+
+    /**
+     * Función principal que verifica la validez de todo el formulario
+     * y habilita/deshabilita el botón de envío.
+     * Es llamada en cada evento de 'input' para una validación en tiempo real.
+     */
+    function checkFormValidity() {
+        const isNameValid = validateName();
+        const isEmailValid = validateEmail();
+        const isPasswordValid = validatePassword();
+        const isConfirmPasswordValid = validateConfirmPassword();
+        const isAgeValid = validateAge();
+
+        // Si todos los campos son válidos, habilitar el botón de envío
+        const allFieldsValid = isNameValid && isEmailValid && isPasswordValid && isConfirmPasswordValid && isAgeValid;
+        submitBtn.disabled = !allFieldsValid;
+        return allFieldsValid; // Retorna el estado general de validez del formulario
+    }
+
+    // --- Asignación de Event Listeners ---
+
+    // Validar cada campo individualmente al escribir (evento 'input')
+    nameInput.addEventListener('input', validateName);
+    emailInput.addEventListener('input', validateEmail);
+    // Para la contraseña, también se revalida la confirmación si cambia la principal
+    passwordInput.addEventListener('input', () => {
+        validatePassword();
+        validateConfirmPassword(); // Si la contraseña cambia, la confirmación también debe validarse
+    });
+    confirmPasswordInput.addEventListener('input', validateConfirmPassword);
+    ageInput.addEventListener('input', validateAge);
+
+
+    // Escuchar cambios en cualquier input para verificar la validez general del formulario
+    // y habilitar/deshabilitar el botón de envío
+    const formInputs = [nameInput, emailInput, passwordInput, confirmPasswordInput, ageInput];
+    formInputs.forEach(input => {
+        input.addEventListener('input', checkFormValidity);
+        // También puedes usar 'blur' para validar cuando el usuario sale del campo
+        // input.addEventListener('blur', checkFormValidity);
+    });
+
+    // Validar el formulario inicialmente al cargar la página (para el botón de envío)
+    checkFormValidity();
+
+
+    // --- Manejo del envío del formulario ---
+    form.addEventListener('submit', (event) => {
+        event.preventDefault(); // Evitar el envío por defecto del formulario
+
+        // Volver a validar todo el formulario al intentar enviar (por si acaso)
+        if (checkFormValidity()) {
+            alert('¡Formulario enviado exitosamente! Los datos son válidos.');
+            // Aquí podrías enviar los datos del formulario a un servidor
+            // Ejemplo: form.submit(); o fetch('/api/registro', { method: 'POST', body: new FormData(form) });
+            // Opcionalmente, resetear el formulario después de un envío exitoso
+            // form.reset();
+            // checkFormValidity(); // Volver a deshabilitar el botón y limpiar estados
+        } else {
+            alert('Por favor, complete y corrija todos los campos antes de enviar.');
+            // Enfocar el primer campo inválido para guiar al usuario
+            const firstInvalid = document.querySelector('.invalid');
+            if (firstInvalid) {
+                firstInvalid.focus();
+            }
+        }
+    });
+
+    // --- Manejo del botón de Reiniciar ---
+    resetBtn.addEventListener('click', () => {
+        // Reiniciar los valores de los campos
+        form.reset();
+
+        // Eliminar las clases de validación y ocultar mensajes de error
+        const allInputs = [nameInput, emailInput, passwordInput, confirmPasswordInput, ageInput];
+        const allErrors = [nameError, emailError, passwordError, confirmPasswordError, ageError];
+
+        allInputs.forEach(input => {
+            input.classList.remove('valid', 'invalid');
+        });
+        allErrors.forEach(error => {
+            error.classList.remove('visible');
+            error.textContent = '';
+        });
+
+        // Deshabilitar el botón de envío nuevamente
+        submitBtn.disabled = true;
+    });
+});

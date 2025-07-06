@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Usuario - Formulario Dinámico</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Registro de Usuario</h2>
+        <form id="registrationForm">
+            <div class="form-group">
+                <label for="name">Nombre (minimi 3 caracteres):</label>
+                <input type="text" id="name" name="name" required aria-describedby="nameError">
+                <span class="error-message" id="nameError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Correo Electrónico (validar formato correcto):</label>
+                <input type="email" id="email" name="email" required aria-describedby="emailError">
+                <span class="error-message" id="emailError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Contraseña (mínimo 8 caracteres con al menos un número y un carácter especial):</label>
+                <input type="password" id="password" name="password" required aria-describedby="passwordError">
+                <span class="error-message" id="passwordError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">Confirmar Contraseña (debe coincidir con la contraseña):</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required aria-describedby="confirmPasswordError">
+                <span class="error-message" id="confirmPasswordError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="age">Edad (debe ser mayor o igual a 18 años):</label>
+                <input type="number" id="age" name="age" required min="0" aria-describedby="ageError">
+                <span class="error-message" id="ageError"></span>
+            </div>
+
+            <div class="buttons">
+                <button type="submit" id="submitBtn" disabled>Enviar Registro</button>
+                <button type="reset" id="resetBtn">Reiniciar Formulario</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

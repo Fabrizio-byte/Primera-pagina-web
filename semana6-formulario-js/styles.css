@@ -1,0 +1,125 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #e0f2f7; /* Un azul claro suave */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    color: #333;
+}
+
+.container {
+    background-color: #ffffff;
+    padding: 35px 40px;
+    border-radius: 10px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 450px;
+    box-sizing: border-box; /* Asegura que el padding no aumente el width */
+}
+
+h2 {
+    text-align: center;
+    color: #007bff; /* Azul vibrante */
+    margin-bottom: 25px;
+    font-size: 1.8em;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"] {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ced4da; /* Borde gris claro */
+    border-radius: 6px;
+    font-size: 1em;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+}
+
+/* Estilos de validación */
+input.invalid {
+    border-color: #dc3545; /* Rojo para campos inválidos */
+    box-shadow: 0 0 8px rgba(220, 53, 69, 0.3);
+}
+
+input.valid {
+    border-color: #28a745; /* Verde para campos válidos */
+    box-shadow: 0 0 8px rgba(40, 167, 69, 0.3);
+}
+
+.error-message {
+    color: #dc3545; /* Texto de error en rojo */
+    font-size: 0.88em;
+    margin-top: 5px;
+    display: block;
+    height: 1.2em; /* Reserva espacio para evitar saltos en el layout */
+    opacity: 0; /* Oculto por defecto */
+    transition: opacity 0.3s ease;
+}
+
+.error-message.visible {
+    opacity: 1; /* Visible cuando hay error */
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+button {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-weight: bold;
+}
+
+button#submitBtn {
+    background-color: #007bff;
+    color: white;
+}
+
+button#submitBtn:hover:not(:disabled) {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+button#submitBtn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+button#resetBtn {
+    background-color: #6c757d; /* Gris */
+    color: white;
+}
+
+button#resetBtn:hover {
+    background-color: #5a6268;
+    transform: translateY(-2px);
+}
